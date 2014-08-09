@@ -13,7 +13,7 @@ class Transient extends Model {
 
     public $table = 'transients';
 
-    public $fillable = ['signature', 'value', 'expires'];
+    public $fillable = ['model_type','model_id','signature', 'property', 'value', 'expires'];
 
     /**
      * Relationship for models to hook into, to store their transient properties.

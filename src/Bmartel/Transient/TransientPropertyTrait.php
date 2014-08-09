@@ -21,7 +21,7 @@ trait TransientPropertyTrait
     public function signature($property)
     {
         $id = uniqid(md5(json_encode(['id' => $this->getKey(), 'model' => static::class, 'property' => $property])), true);
-        return preg_replace('/^[_.-]+$/', '', $id);
+        return preg_replace('/^[_\.-]+$/', '', $id);
     }
 
     /**
