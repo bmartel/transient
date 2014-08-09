@@ -11,5 +11,5 @@ interface TransientRepositoryInterface {
 
     public function expire($signature);
 
-    public function store(TransientPropertyInterface $transient, $signature, $value, $expires);
+    public function store(TransientPropertyInterface $transient, $property, $value, $expires);
 } 

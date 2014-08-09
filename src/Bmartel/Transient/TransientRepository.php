@@ -41,14 +41,16 @@ class TransientRepository implements TransientRepositoryInterface {
      * Generate and store a new transient value.
      *
      * @param \Bmartel\Transient\TransientPropertyInterface $transient
-     * @param $signature
+     * @param $property
      * @param $value
      * @param $expires
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function store(TransientPropertyInterface $transient, $signature, $value, $expires)
+    public function store(TransientPropertyInterface $transient, $property, $value, $expires)
     {
-        return $transient->transientProperties()->create(compact('signature','value','expires'));
+        $signature = $transient->signature($property);
+
+        return $transient->transientProperties()->create(compact('signature','property','value','expires'));
     }
 
 } 

@@ -50,8 +50,6 @@ class Service
      */
     public function generate(TransientPropertyInterface $transient, $property, $value, $expires)
     {
-        $signature = $transient->signature($property);
-
-        return $this->transient->store($transient, $signature, $value, $expires);
+        return $this->transient->store($transient, $property, $value, $expires);
     }
 } 

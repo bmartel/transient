@@ -20,7 +20,7 @@ trait TransientPropertyTrait
      */
     public function signature($property)
     {
-        $id = uniqid(md5(json_encode(['id' => $this->getKey(), 'class' => static::$class, 'property' => $property])), true);
+        $id = uniqid(md5(json_encode(['id' => $this->getKey(), 'model' => static::$class, 'property' => $property])), true);
         return preg_replace('/^[_.-]+$/', '', $id);
     }
 
@@ -33,4 +33,5 @@ trait TransientPropertyTrait
     {
         return $this->morphMany('Bmartel\Transient\Transient', 'property', 'model_type', 'model_id');
     }
+
 } 
