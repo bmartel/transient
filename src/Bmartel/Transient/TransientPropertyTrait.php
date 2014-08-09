@@ -20,7 +20,12 @@ trait TransientPropertyTrait
      */
     public function signature($property)
     {
-        return md5(json_encode(['id' => $this->getKey(), 'model' => static::class, 'property' => $property]));
+        $key = Config::get('app.key');
+
+        $property = json_encode(['id' => $this->getKey(), 'model' => static::class, 'property' => $property]);
+        $id = base64_encode(hash_hmac('sha256', $property, $key, true));
+
+        return urlencode($id);
     }
 
     /**

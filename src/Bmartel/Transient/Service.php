@@ -36,6 +36,11 @@ class Service
         return $value;
     }
 
+    /**
+     * Expire
+     * @param $signature
+     * @return mixed
+     */
     public function expire($signature)
     {
         return $this->transient->expire($signature);
@@ -46,7 +51,7 @@ class Service
      * @param $property
      * @param $value
      * @param $expires
-     * @return mixed
+     * @return \Bmartel\Transient\Transient
      */
     public function generate(TransientPropertyInterface $transient, $property, $value, $expires)
     {
