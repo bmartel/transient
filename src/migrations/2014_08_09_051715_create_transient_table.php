@@ -16,7 +16,7 @@ class CreateTransientTable extends Migration {
             $table->increments('id');
             $table->integer('model_id', true);
             $table->string('model_type');
-            $table->string('signature', 32);
+            $table->string('signature', 60);
             $table->string('value', 2000);
             $table->dateTime('expires');
             $table->timestamps();
