@@ -13,15 +13,14 @@ trait TransientPropertyTrait
 {
 
     /**
-     * Return a unique identifier for the property.
+     * Return a signature for the property.
      *
      * @param $property
      * @return string
      */
     public function signature($property)
     {
-        $id = uniqid(md5(json_encode(['id' => $this->getKey(), 'model' => static::class, 'property' => $property])), true);
-        return preg_replace('/[_\.-]+/', '', $id);
+        return md5(json_encode(['id' => $this->getKey(), 'model' => static::class, 'property' => $property]));
     }
 
     /**
