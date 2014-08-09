@@ -13,7 +13,7 @@ class CreateTransientTable extends Migration
      */
     public function up()
     {
-        Schema::create('transient', function (Blueprint $table) {
+        Schema::create('transients', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('model_id', false, true);
             $table->string('model_type');

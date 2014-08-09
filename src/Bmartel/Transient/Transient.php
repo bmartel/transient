@@ -11,6 +11,8 @@ class Transient extends Model {
 
     use SoftDeletingTrait;
 
+    public $table = 'transients';
+
     public $fillable = ['signature', 'value', 'expires'];
 
     /**
