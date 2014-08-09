@@ -33,7 +33,7 @@ class CreateTransientTable extends Migration
      */
     public function down()
     {
-        Schema::drop('transient');
+        Schema::drop('transients');
     }
 
 }
