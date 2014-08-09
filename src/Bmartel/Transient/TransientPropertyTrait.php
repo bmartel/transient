@@ -1,13 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: brand_000
- * Date: 09/08/14
- * Time: 1:09 AM
- */
 
 namespace Bmartel\Transient;
 
+
+use Config;
 
 trait TransientPropertyTrait
 {
