@@ -27,8 +27,8 @@ class Transient extends Model {
      *
      * @return bool|int
      */
-    public static function expire() {
-        return static::update(['expires' => Carbon::now()]);
+    public function expire() {
+        return $this->update(['expires' => Carbon::now()]);
     }
 
     /**

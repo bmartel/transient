@@ -2,7 +2,8 @@
 namespace Bmartel\Transient;
 
 
-class TransientRepository implements TransientRepositoryInterface {
+class TransientRepository implements TransientRepositoryInterface
+{
 
     /**
      * Find a Transient by its signature.
@@ -12,7 +13,7 @@ class TransientRepository implements TransientRepositoryInterface {
      */
     public function findBySignature($signature)
     {
-        return Transient::where('signature',$signature)->first();
+        return Transient::where('signature', $signature)->first();
     }
 
     /**
@@ -34,7 +35,9 @@ class TransientRepository implements TransientRepositoryInterface {
      */
     public function expire($signature)
     {
-        return Transient::expire();
+        $transient = Transient::where('signature', $signature)->first();
+
+        return ($transient) ? $transient->expire() : false;
     }
 
     /**
@@ -50,7 +53,7 @@ class TransientRepository implements TransientRepositoryInterface {
     {
         $signature = $transient->signature($property);
 
-        return $transient->transientProperties()->create(compact('signature','property','value','expires'));
+        return $transient->transientProperties()->create(compact('signature', 'property', 'value', 'expires'));
     }
 
 } 
