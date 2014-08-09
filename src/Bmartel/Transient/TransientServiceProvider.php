@@ -2,43 +2,48 @@
 
 use Illuminate\Support\ServiceProvider;
 
-class TransientServiceProvider extends ServiceProvider {
+class TransientServiceProvider extends ServiceProvider
+{
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
-	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		$this->package('bmartel/transient');
-	}
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->package('bmartel/transient');
+    }
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		//
-	}
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind('Bmartel\Transient\TransientRepositoryService', 'Bmartel\Transient\TransientRepository');
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array();
-	}
+        $this->app->bindShared('Bmartel\Transient\Service', function ($app) {
+            return new Service($app['Bmartel\Transient\TransientRepositoryService']);
+        });
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return array('transient');
+    }
 
 }
