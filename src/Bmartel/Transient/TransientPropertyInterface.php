@@ -5,7 +5,7 @@ namespace Bmartel\Transient;
 interface TransientPropertyInterface {
 
     /**
-     * Return a unique identifier for the property.
+     * Return a signature for the property.
      *
      * @param $property
      * @return string

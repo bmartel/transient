@@ -12,4 +12,11 @@ interface TransientRepositoryInterface {
     public function expire($signature);
 
     public function store(TransientPropertyInterface $transient, $property, $value, $expires);
+
+    public function deleteByModel(TransientPropertyInterface $transient);
+
+    public function deleteByProperty(array $transientProperties);
+
+    public function deleteByModelProperty(TransientPropertyInterface $transient, array $transientProperties);
+
 } 

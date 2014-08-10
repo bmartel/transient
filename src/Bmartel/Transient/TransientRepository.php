@@ -56,4 +56,57 @@ class TransientRepository implements TransientRepositoryInterface
         return $transient->transientProperties()->create(compact('signature', 'property', 'value', 'expires'));
     }
 
+    /**
+     * Delete all properties attached to a given model.
+     *
+     * @param TransientPropertyInterface $transient
+     * @return mixed
+     */
+    public function deleteByModel(TransientPropertyInterface $transient)
+    {
+        return $transient->transientProperties()->delete();
+    }
+
+    /**
+     * Delete all properties by given array of property names.
+     *
+     * @param array $transientProperties
+     * @return int
+     */
+    public function deleteByProperty(array $transientProperties)
+    {
+        if ($transientProperties) {
+            $transient = Transient::query();
+
+            foreach ($transientProperties as $property)
+                $transient->orWhere('property', $property);
+
+            return $transient->delete();
+        }
+
+        // If no arguments are provided, dont delete anything.
+        return 0;
+    }
+
+    /**
+     * Delete all properties listed in the array and attached to the defined model.
+     *
+     * @param TransientPropertyInterface $transient
+     * @param array $transientProperties
+     * @return int
+     */
+    public function deleteByModelProperty(TransientPropertyInterface $transient, array $transientProperties)
+    {
+        if ($transientProperties) {
+
+            return $transient->transientProperties()->where(function($q) use($transientProperties){
+                foreach ($transientProperties as $property)
+                    $q->orWhere('property', $property);
+            })->delete();
+        }
+
+        // If no arguments are provided, dont delete anything.
+        return 0;
+    }
+
 } 
