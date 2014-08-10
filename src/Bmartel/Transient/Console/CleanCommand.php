@@ -30,11 +30,16 @@ class CleanCommand extends Command
      */
     private $transient;
 
+    /**
+     * @var InputParser
+     */
+    private $inputParser;
 
-    public function __construct(TransientRepositoryInterface $transient, InputParser $input)
+
+    public function __construct(TransientRepositoryInterface $transient, InputParser $inputParser)
     {
         $this->transient = $transient;
-        $this->input = $input;
+        $this->inputParser = $inputParser;
         parent::__construct();
     }
 
@@ -51,7 +56,7 @@ class CleanCommand extends Command
         if ($class = $this->argument('modelClass')) {
 
             // Parse the class
-            $model = $this->input->parse($class);
+            $model = $this->inputParser->parse($class);
 
             if (!is_object($model))
                 throw new InvalidObjectTypeException("Value is not of type object.");
@@ -64,7 +69,7 @@ class CleanCommand extends Command
 
         // If user provided property options, parse them into an array for querying.
         if ($properties = $this->option('properties'))
-            $transientProperties = $this->input->parseProperties($properties);
+            $transientProperties = $this->inputParser->parseProperties($properties);
 
         $result = null;
 
