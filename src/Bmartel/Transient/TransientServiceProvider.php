@@ -29,7 +29,7 @@ class TransientServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Bmartel\Transient\TransientRepositoryService', 'Bmartel\Transient\TransientRepository');
+        $this->app->bind('Bmartel\Transient\TransientRepositoryInterface', 'Bmartel\Transient\TransientRepository');
 
         $this->app->bindShared('Bmartel\Transient\Service', function ($app) {
             return new Service($app['Bmartel\Transient\TransientRepositoryService']);
