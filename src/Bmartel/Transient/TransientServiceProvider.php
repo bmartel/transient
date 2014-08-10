@@ -32,7 +32,7 @@ class TransientServiceProvider extends ServiceProvider
         $this->app->bind('Bmartel\Transient\TransientRepositoryInterface', 'Bmartel\Transient\TransientRepository');
 
         $this->app->bindShared('Bmartel\Transient\Service', function ($app) {
-            return new Service($app['Bmartel\Transient\TransientRepositoryService']);
+            return new Service($app['Bmartel\Transient\TransientRepositoryInterface']);
         });
 
         $this->commands('Bmartel\Transient\Console\CleanCommand');
