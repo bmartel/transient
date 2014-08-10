@@ -13,10 +13,10 @@ interface TransientRepositoryInterface {
 
     public function store(TransientPropertyInterface $transient, $property, $value, $expires);
 
-    public function deleteByModel(TransientPropertyInterface $transient);
+    public function deleteByModel(TransientPropertyInterface $transient, $expiredOnly = true);
 
-    public function deleteByProperty(array $transientProperties);
+    public function deleteByProperty(array $transientProperties, $expiredOnly = true);
 
-    public function deleteByModelProperty(TransientPropertyInterface $transient, array $transientProperties);
+    public function deleteByModelProperty(TransientPropertyInterface $transient, array $transientProperties, $expiredOnly = true);
 
 } 

@@ -6,6 +6,8 @@ use Bmartel\Transient\Exception\InvalidObjectTypeException;
 use Bmartel\Transient\TransientPropertyInterface;
 use Bmartel\Transient\TransientRepositoryInterface;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class CleanCommand extends Command
 {
@@ -83,7 +85,7 @@ class CleanCommand extends Command
     protected function getArguments()
     {
         return [
-            ['modelClass', InputArgument::VALUE_OPTIONAL, 'The model class scope to perform the transient clean up on.', null]
+            ['modelClass', InputArgument::OPTIONAL, 'The model class scope to perform the transient clean up on.', null]
         ];
     }
 

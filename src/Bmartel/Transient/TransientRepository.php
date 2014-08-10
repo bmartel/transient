@@ -2,6 +2,8 @@
 namespace Bmartel\Transient;
 
 
+use Carbon\Carbon;
+
 class TransientRepository implements TransientRepositoryInterface
 {
 
@@ -60,9 +62,10 @@ class TransientRepository implements TransientRepositoryInterface
      * Delete all properties attached to a given model.
      *
      * @param TransientPropertyInterface $transient
+     * @param bool $expiredOnly
      * @return mixed
      */
-    public function deleteByModel(TransientPropertyInterface $transient)
+    public function deleteByModel(TransientPropertyInterface $transient, $expiredOnly = true)
     {
         return $transient->transientProperties()->delete();
     }
@@ -71,17 +74,18 @@ class TransientRepository implements TransientRepositoryInterface
      * Delete all properties by given array of property names.
      *
      * @param array $transientProperties
+     * @param bool $expiredOnly
      * @return int
      */
-    public function deleteByProperty(array $transientProperties)
+    public function deleteByProperty(array $transientProperties, $expiredOnly = true)
     {
         if ($transientProperties) {
-            $transient = Transient::query();
+            $query = Transient::whereIn('property', $transientProperties);
 
-            foreach ($transientProperties as $property)
-                $transient->orWhere('property', $property);
+            if ($expiredOnly)
+                $query->where('expires', '<', Carbon::now());
 
-            return $transient->delete();
+            return $query->delete();
         }
 
         // If no arguments are provided, dont delete anything.
@@ -93,16 +97,19 @@ class TransientRepository implements TransientRepositoryInterface
      *
      * @param TransientPropertyInterface $transient
      * @param array $transientProperties
+     * @param bool $expiredOnly
      * @return int
      */
-    public function deleteByModelProperty(TransientPropertyInterface $transient, array $transientProperties)
+    public function deleteByModelProperty(TransientPropertyInterface $transient, array $transientProperties, $expiredOnly = true)
     {
         if ($transientProperties) {
 
-            return $transient->transientProperties()->where(function($q) use($transientProperties){
-                foreach ($transientProperties as $property)
-                    $q->orWhere('property', $property);
-            })->delete();
+            $query = $transient->transientProperties()->whereIn('property', $transientProperties);
+
+            if ($expiredOnly)
+                $query->where('expires', '<', Carbon::now());
+
+            return $query->delete();
         }
 
         // If no arguments are provided, dont delete anything.
