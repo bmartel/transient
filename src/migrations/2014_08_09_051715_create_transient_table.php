@@ -20,7 +20,7 @@ class CreateTransientTable extends Migration
             $table->string('signature', 60);
             $table->string('property', 255);
             $table->string('value', 2000);
-            $table->dateTime('expires');
+            $table->dateTime('expire');
             $table->timestamps();
             $table->softDeletes();
         });
