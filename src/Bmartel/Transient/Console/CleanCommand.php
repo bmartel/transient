@@ -6,6 +6,7 @@ use Bmartel\Transient\Exception\InvalidObjectTypeException;
 use Bmartel\Transient\TransientPropertyInterface;
 use Bmartel\Transient\TransientRepositoryInterface;
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -35,11 +36,17 @@ class CleanCommand extends Command
      */
     private $inputParser;
 
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    private $app;
 
-    public function __construct(TransientRepositoryInterface $transient, InputParser $inputParser)
+
+    public function __construct(TransientRepositoryInterface $transient, InputParser $inputParser, Application $app)
     {
         $this->transient = $transient;
         $this->inputParser = $inputParser;
+        $this->app = $app;
         parent::__construct();
     }
 
@@ -58,10 +65,7 @@ class CleanCommand extends Command
             // Parse the class
             $model = $this->inputParser->parse($class);
 
-            if (!is_object($model))
-                throw new InvalidObjectTypeException("Value is not of type object.");
-
-            $modelType = new $model;
+            $modelType = $this->app->make($model);
 
             if (!$modelType instanceof TransientPropertyInterface)
                 throw new InvalidObjectTypeException('Class does not implement \Bmartel\Transient\TransientPropertyInterface');
@@ -77,9 +81,11 @@ class CleanCommand extends Command
         if (isset($transientProperties) && isset($modelType))
             $result = $this->transient->deleteByModelProperty($modelType, $transientProperties);
         elseif (isset($modelType))
-            $result = $this->transient->deleteByModel($modelType);
+            $result = $this->transient->deleteByModelType($modelType);
         elseif (isset($transientProperties))
             $result = $this->transient->deleteByProperty($transientProperties);
+        else
+            $result = $this->transient->deleteAll();
 
         $propertiesName = str_plural('property', $result);
 

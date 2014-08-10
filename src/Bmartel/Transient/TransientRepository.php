@@ -59,6 +59,23 @@ class TransientRepository implements TransientRepositoryInterface
     }
 
     /**
+     * Delete all transient properties.
+     *
+     * @param bool $expiredOnly
+     * @return bool|mixed|null
+     */
+    public function deleteAll($expiredOnly = true)
+    {
+        $query = Transient::query();
+
+        if($expiredOnly)
+            $query->expired();
+
+        return $query->delete();
+    }
+
+
+    /**
      * Delete all properties attached to a given model.
      *
      * @param TransientPropertyInterface $transient
@@ -67,7 +84,29 @@ class TransientRepository implements TransientRepositoryInterface
      */
     public function deleteByModel(TransientPropertyInterface $transient, $expiredOnly = true)
     {
-        return $transient->transientProperties()->delete();
+        $query = $transient->transientProperties();
+
+        if($expiredOnly)
+            $query->expired();
+
+        return $query->delete();
+    }
+
+    /**
+     * Delete all properties attached to a given model.
+     *
+     * @param TransientPropertyInterface $transient
+     * @param bool $expiredOnly
+     * @return mixed
+     */
+    public function deleteByModelType(TransientPropertyInterface $transient, $expiredOnly = true)
+    {
+        $query = Transient::where('model_type', get_class($transient));
+
+        if ($expiredOnly)
+            $query->expired();
+
+        return $query->delete();
     }
 
     /**
@@ -83,7 +122,7 @@ class TransientRepository implements TransientRepositoryInterface
             $query = Transient::whereIn('property', $transientProperties);
 
             if ($expiredOnly)
-                $query->where('expires', '<', Carbon::now());
+                $query->expired();
 
             return $query->delete();
         }
@@ -107,7 +146,7 @@ class TransientRepository implements TransientRepositoryInterface
             $query = $transient->transientProperties()->whereIn('property', $transientProperties);
 
             if ($expiredOnly)
-                $query->where('expires', '<', Carbon::now());
+                $query->expired();
 
             return $query->delete();
         }
