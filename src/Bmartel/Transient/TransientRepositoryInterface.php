@@ -7,10 +7,9 @@ interface TransientRepositoryInterface {
 
     public function findBySignature($signature);
 
-
     public function expire($signature);
 
-    public function store(TransientPropertyInterface $transient, $property, $value, $expires);
+    public function store(TransientPropertyInterface $transient, $signature, $property, $value, $expires);
 
     public function deleteAll($expiredOnly = true);
 

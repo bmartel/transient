@@ -1,9 +1,6 @@
 <?php
 namespace Bmartel\Transient;
 
-
-use Illuminate\Database\Eloquent\Model;
-
 class Service
 {
     /**
@@ -31,7 +28,7 @@ class Service
 
         $value = $transient->value;
 
-        $this->transient->deleteBySignature($signature);
+        $transient->delete();
 
         return $value;
     }
@@ -55,6 +52,19 @@ class Service
      */
     public function generate(TransientPropertyInterface $transient, $property, $value, $expires)
     {
-        return $this->transient->store($transient, $property, $value, $expires);
+        $signature = $transient->signature($property);
+
+        return $this->transient->store($transient, $signature, $property, $value, $expires);
+    }
+
+    /**
+     * Determine if the provided signature is a valid signature.
+     *
+     * @param $signature
+     * @return bool
+     */
+    public function validate($signature) {
+
+        return (bool) $this->transient->findBySignature($signature);
     }
 } 
