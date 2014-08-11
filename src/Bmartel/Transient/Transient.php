@@ -9,12 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Transient extends Model
 {
-
-    use SoftDeletingTrait;
-
     public $table = 'transients';
 
-    public $fillable = ['model_type', 'model_id', 'signature', 'property', 'value', 'expires'];
+    public $fillable = ['model_type', 'model_id', 'signature', 'property', 'value', 'expire'];
 
     /**
      * Relationship for models to hook into, to store their transient properties.
@@ -33,7 +30,7 @@ class Transient extends Model
      */
     public function expire()
     {
-        return $this->update(['expires' => Carbon::now()]);
+        return $this->update(['expire' => Carbon::now()]);
     }
 
     /**
@@ -44,7 +41,7 @@ class Transient extends Model
      */
     public function scopeExpired($query)
     {
-        return $query->where('expires', '<', Carbon::now());
+        return $query->where('expire', '<', Carbon::now());
     }
 
 } 

@@ -1,15 +1,15 @@
 {
     "name": "bmartel/transient",
-    "description": "",
+    "description": "Transient property values for Eloquent models.",
     "authors": [
         {
-            "name": "",
-            "email": ""
+            "name": "Brandon Martel",
+            "email": "brandonmartel@gmail.com"
         }
     ],
     "require": {
-        "php": ">=5.5.0",
-        "illuminate/support": "4.2.*"
+        "php": ">=5.4.0",
+        "illuminate/support": "4.*"
     },
     "autoload": {
         "classmap": [

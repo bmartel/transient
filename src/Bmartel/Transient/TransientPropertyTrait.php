@@ -20,9 +20,9 @@ trait TransientPropertyTrait
 
         $property = json_encode([
             'id' => $this->getKey(),
-            'model' => static::class,
+            'model' => get_called_class(),
             'property' => $property,
-            'created' => $this->created_at->timestamp
+            'created_at' => $this->created_at
         ]);
 
         return urlencode(base64_encode(hash_hmac('sha256', $property, $key, true)));

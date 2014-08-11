@@ -18,11 +18,10 @@ class CreateTransientTable extends Migration
             $table->integer('model_id', false, true);
             $table->string('model_type');
             $table->string('signature', 60);
-            $table->string('property', 255);
+            $table->string('property', 60);
             $table->string('value', 2000);
             $table->dateTime('expire');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
