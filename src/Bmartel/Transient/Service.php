@@ -14,7 +14,7 @@ class Service
     }
 
     /**
-     * Consume the signature to retrieve the transient value one time.
+     * Consume the signature to retrieve the transient one time.
      *
      * @param $signature
      * @return null|string
@@ -26,11 +26,9 @@ class Service
         if (!$transient)
             return null;
 
-        $value = $transient->value;
+        $transient->expire();
 
-        $transient->delete();
-
-        return $value;
+        return $transient;
     }
 
     /**
