@@ -17,7 +17,7 @@ class Service
      * Consume the signature to retrieve the transient one time.
      *
      * @param $signature
-     * @return null|string
+     * @return null|\Bmartel\Transient\Transient
      */
     public function consume($signature)
     {
