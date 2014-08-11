@@ -12,7 +12,7 @@ class TransientRepository implements TransientRepositoryInterface
      */
     public function findBySignature($signature)
     {
-        return Transient::where('signature', $signature)->first();
+        return Transient::where('signature', $signature)->active()->first();
     }
 
     /**
@@ -34,7 +34,7 @@ class TransientRepository implements TransientRepositoryInterface
      */
     public function expire($signature)
     {
-        $transient = Transient::where('signature', $signature)->first();
+        $transient = $this->findBySignature($signature);
 
         return ($transient) ? $transient->expire() : false;
     }
@@ -44,12 +44,12 @@ class TransientRepository implements TransientRepositoryInterface
      * @param $signature
      * @param $property
      * @param $value
-     * @param $expires
+     * @param $expire
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function store(TransientPropertyInterface $transient, $signature, $property, $value, $expires)
+    public function store(TransientPropertyInterface $transient, $signature, $property, $value, $expire)
     {
-        return $transient->transientProperties()->create(compact('signature', 'property', 'value', 'expires'));
+        return $transient->transientProperties()->create(compact('signature', 'property', 'value', 'expire'));
     }
 
     /**

@@ -14,11 +14,11 @@ class Transient extends Model
     public $fillable = ['model_type', 'model_id', 'signature', 'property', 'value', 'expire'];
 
     /**
-     * Relationship for models to hook into, to store their transient properties.
+     * Returns the relationship for retrieving the owning model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function property()
+    public function owner()
     {
         return $this->morphTo();
     }
@@ -44,4 +44,14 @@ class Transient extends Model
         return $query->where('expire', '<', Carbon::now());
     }
 
+    /**
+     * Scope retrieving all transient values which are not expired.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('expire', '>', Carbon::now());
+    }
 } 

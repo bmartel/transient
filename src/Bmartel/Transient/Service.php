@@ -47,14 +47,14 @@ class Service
      * @param TransientPropertyInterface $transient
      * @param $property
      * @param $value
-     * @param $expires
+     * @param $expire
      * @return \Bmartel\Transient\Transient
      */
-    public function generate(TransientPropertyInterface $transient, $property, $value, $expires)
+    public function generate(TransientPropertyInterface $transient, $property, $value, $expire)
     {
         $signature = $transient->signature($property);
 
-        return $this->transient->store($transient, $signature, $property, $value, $expires);
+        return $this->transient->store($transient, $signature, $property, $value, $expire);
     }
 
     /**
