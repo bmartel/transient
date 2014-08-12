@@ -20,7 +20,7 @@ class Transient extends Model
      */
     public function owner()
     {
-        return $this->morphTo();
+	    return $this->morphTo('property', 'model_type', 'model_id');
     }
 
     /**
