@@ -21,7 +21,7 @@ class CreateTransientTable extends Migration
             $table->string('property', 60);
             $table->string('value', 2000);
             $table->dateTime('expire');
-            $table->timestamps();
+	        $table->timestamp('created_at');
         });
     }
 

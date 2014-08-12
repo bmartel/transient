@@ -13,6 +13,16 @@ class Transient extends Model
 
     public $fillable = ['model_type', 'model_id', 'signature', 'property', 'value', 'expire'];
 
+	/**
+	 * Don't manage the updated_at attribute manually.
+	 *
+	 * @param $value
+	 */
+	public function setUpdatedAtAttribute($value)
+	{
+		// Do nothing.
+	}
+
     /**
      * Returns the relationship for retrieving the owning model.
      *
