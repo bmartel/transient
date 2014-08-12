@@ -22,7 +22,7 @@ trait TransientPropertyTrait
             'id' => $this->getKey(),
             'model' => get_called_class(),
             'property' => $property,
-            'created_at' => $this->created_at
+            'created_at' => time()
         ]);
 
         return hash_hmac('sha256', $property, $key);
