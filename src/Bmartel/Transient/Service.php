@@ -31,6 +31,26 @@ class Service
         return $transient;
     }
 
+	/**
+	 * Apply the pending transient value to the owning model.
+	 *
+	 * @param $signature
+	 * @return int
+	 */
+	public function apply($signature) {
+
+		$result = 0;
+
+		if($transient = $this->consume($signature)) {
+
+			$result = $transient->owner->update(
+				[$transient->property => $transient->value]
+			);
+		}
+
+		return $result;
+	}
+
     /**
      * Expire
      * @param $signature
