@@ -9,7 +9,7 @@ interface TransientRepositoryInterface {
 
     public function expire($signature);
 
-    public function store(TransientPropertyInterface $transient, $signature, $property, $value, $expires);
+    public function store(TransientPropertyInterface $transient, $signature, $property, $value, $expire);
 
     public function deleteAll($expiredOnly = true);
 
