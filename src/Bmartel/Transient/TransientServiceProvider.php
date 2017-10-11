@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 
+
 class TransientServiceProvider extends ServiceProvider
 {
 
@@ -31,7 +32,7 @@ class TransientServiceProvider extends ServiceProvider
     {
         $this->app->bind('Bmartel\Transient\TransientRepositoryInterface', 'Bmartel\Transient\TransientRepository');
 
-        $this->app->bindShared('Bmartel\Transient\Service', function ($app) {
+        $this->app->bindShared('Bmartel\Transient\Service', function($app) {
             return new Service($app['Bmartel\Transient\TransientRepositoryInterface']);
         });
 
@@ -45,7 +46,7 @@ class TransientServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('transient');
+        return ['transient'];
     }
 
 }

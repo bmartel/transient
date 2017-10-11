@@ -1,9 +1,10 @@
 <?php
-namespace Bmartel\Transient\Console;
 
+namespace Bmartel\Transient\Console;
 
 class InputParser
 {
+
     public function parse($model)
     {
         $segments = explode('\\', str_replace('/', '\\', $model));

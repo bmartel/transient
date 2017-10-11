@@ -2,8 +2,8 @@
 
 namespace Bmartel\Transient;
 
-
-interface TransientRepositoryInterface {
+interface TransientRepositoryInterface
+{
 
     public function findBySignature($signature);
 
@@ -21,6 +21,10 @@ interface TransientRepositoryInterface {
 
     public function deleteByProperty(array $transientProperties, $expiredOnly = true);
 
-    public function deleteByModelProperty(TransientPropertyInterface $transient, array $transientProperties, $expiredOnly = true);
+    public function deleteByModelProperty(
+        TransientPropertyInterface $transient,
+        array $transientProperties,
+        $expiredOnly = true
+    );
 
 } 

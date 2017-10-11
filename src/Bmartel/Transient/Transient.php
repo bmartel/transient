@@ -2,13 +2,14 @@
 
 namespace Bmartel\Transient;
 
-
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
+
 class Transient extends Model
 {
+
     public $table = 'transients';
 
     public $fillable = ['model_type', 'model_id', 'signature', 'property', 'value', 'expire'];
@@ -20,7 +21,7 @@ class Transient extends Model
      */
     public function owner()
     {
-	    return $this->morphTo('property', 'model_type', 'model_id');
+        return $this->morphTo('property', 'model_type', 'model_id');
     }
 
     /**
@@ -37,6 +38,7 @@ class Transient extends Model
      * Scope retrieving all transient values which have expired.
      *
      * @param $query
+     *
      * @return mixed
      */
     public function scopeExpired($query)
@@ -48,6 +50,7 @@ class Transient extends Model
      * Scope retrieving all transient values which are not expired.
      *
      * @param $query
+     *
      * @return mixed
      */
     public function scopeActive($query)
