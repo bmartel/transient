@@ -1,6 +1,6 @@
 <?php
-namespace Bmartel\Transient\Console;
 
+namespace Bmartel\Transient\Console;
 
 use Bmartel\Transient\Exception\InvalidObjectTypeException;
 use Bmartel\Transient\TransientPropertyInterface;
@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+
 
 class CleanCommand extends Command
 {
@@ -26,6 +27,7 @@ class CleanCommand extends Command
      * @var string
      */
     protected $description = 'Removes expired transient values.';
+
     /**
      * @var \Bmartel\Transient\TransientRepositoryInterface
      */
@@ -40,7 +42,6 @@ class CleanCommand extends Command
      * @var \Illuminate\Foundation\Application
      */
     private $app;
-
 
     public function __construct(TransientRepositoryInterface $transient, InputParser $inputParser, Application $app)
     {
@@ -67,25 +68,28 @@ class CleanCommand extends Command
 
             $modelType = $this->app->make($model);
 
-            if (!$modelType instanceof TransientPropertyInterface)
+            if (!$modelType instanceof TransientPropertyInterface) {
                 throw new InvalidObjectTypeException('Class does not implement \Bmartel\Transient\TransientPropertyInterface');
+            }
         }
 
         // If user provided property options, parse them into an array for querying.
-        if ($properties = $this->option('properties'))
+        if ($properties = $this->option('properties')) {
             $transientProperties = $this->inputParser->parseProperties($properties);
+        }
 
         $result = null;
 
         // Determine what parameters to base the transient removal on.
-        if (isset($transientProperties) && isset($modelType))
+        if (isset($transientProperties) && isset($modelType)) {
             $result = $this->transient->deleteByModelProperty($modelType, $transientProperties);
-        elseif (isset($modelType))
+        } elseif (isset($modelType)) {
             $result = $this->transient->deleteByModelType($modelType);
-        elseif (isset($transientProperties))
+        } elseif (isset($transientProperties)) {
             $result = $this->transient->deleteByProperty($transientProperties);
-        else
+        } else {
             $result = $this->transient->deleteAll();
+        }
 
         $propertiesName = str_plural('property', $result);
 
@@ -96,7 +100,7 @@ class CleanCommand extends Command
     protected function getArguments()
     {
         return [
-            ['modelClass', InputArgument::OPTIONAL, 'The model class scope to perform the transient clean up on.', null]
+            ['modelClass', InputArgument::OPTIONAL, 'The model class scope to perform the transient clean up on.', null],
         ];
     }
 
@@ -108,7 +112,13 @@ class CleanCommand extends Command
     protected function getOptions()
     {
         return [
-            ['properties', null, InputOption::VALUE_OPTIONAL, 'A comma-separated list of properties for the command.', null]
+            [
+                'properties',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'A comma-separated list of properties for the command.',
+                null,
+            ],
         ];
     }
 } 

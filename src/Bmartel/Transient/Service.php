@@ -1,8 +1,10 @@
 <?php
+
 namespace Bmartel\Transient;
 
 class Service
 {
+
     /**
      * @var TransientRepositoryInterface
      */
@@ -17,43 +19,49 @@ class Service
      * Consume the signature to retrieve the transient one time.
      *
      * @param $signature
+     *
      * @return null|\Bmartel\Transient\Transient
      */
     public function consume($signature)
     {
         $transient = $this->transient->findBySignature($signature);
 
-        if (!$transient)
+        if (!$transient) {
             return null;
+        }
 
         $transient->expire();
 
         return $transient;
     }
 
-	/**
-	 * Apply the pending transient value to the owning model.
-	 *
-	 * @param $signature
-	 * @return int
-	 */
-	public function apply($signature) {
+    /**
+     * Apply the pending transient value to the owning model.
+     *
+     * @param $signature
+     *
+     * @return int
+     */
+    public function apply($signature)
+    {
 
-		$result = 0;
+        $result = 0;
 
-		if($transient = $this->consume($signature)) {
+        if ($transient = $this->consume($signature)) {
 
-			$result = $transient->owner->update(
-				[$transient->property => $transient->value]
-			);
-		}
+            $result = $transient->owner->update(
+                [$transient->property => $transient->value]
+            );
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
     /**
      * Expire
+     *
      * @param $signature
+     *
      * @return mixed
      */
     public function expire($signature)
@@ -66,6 +74,7 @@ class Service
      * @param $property
      * @param $value
      * @param $expire
+     *
      * @return \Bmartel\Transient\Transient
      */
     public function generate(TransientPropertyInterface $transient, $property, $value, $expire)
@@ -79,9 +88,11 @@ class Service
      * Determine if the provided signature is a valid signature.
      *
      * @param $signature
+     *
      * @return bool
      */
-    public function validate($signature) {
+    public function validate($signature)
+    {
 
         return (bool) $this->transient->findBySignature($signature);
     }

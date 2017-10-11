@@ -1,5 +1,8 @@
 <?php
+
 namespace Bmartel\Transient\Exception;
 
+class InvalidObjectTypeException extends \Exception
+{
 
-class InvalidObjectTypeException extends \Exception {}
+}

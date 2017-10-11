@@ -1,4 +1,5 @@
 <?php
+
 namespace Bmartel\Transient;
 
 class TransientRepository implements TransientRepositoryInterface
@@ -8,6 +9,7 @@ class TransientRepository implements TransientRepositoryInterface
      * Find a Transient by its signature.
      *
      * @param $signature
+     *
      * @return null|\Bmartel\Transient\Transient
      */
     public function findBySignature($signature)
@@ -19,6 +21,7 @@ class TransientRepository implements TransientRepositoryInterface
      * Delete a transient by its signature.
      *
      * @param $signature
+     *
      * @return mixed
      */
     public function deleteBySignature($signature)
@@ -30,6 +33,7 @@ class TransientRepository implements TransientRepositoryInterface
      * Expire the transient by its signature.
      *
      * @param $signature
+     *
      * @return bool|int
      */
     public function expire($signature)
@@ -45,6 +49,7 @@ class TransientRepository implements TransientRepositoryInterface
      * @param $property
      * @param $value
      * @param $expire
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(TransientPropertyInterface $transient, $signature, $property, $value, $expire)
@@ -56,32 +61,35 @@ class TransientRepository implements TransientRepositoryInterface
      * Delete all transient properties.
      *
      * @param bool $expiredOnly
+     *
      * @return bool|mixed|null
      */
     public function deleteAll($expiredOnly = true)
     {
         $query = Transient::query();
 
-        if($expiredOnly)
+        if ($expiredOnly) {
             $query->expired();
+        }
 
         return $query->delete();
     }
-
 
     /**
      * Delete all properties attached to a given model.
      *
      * @param TransientPropertyInterface $transient
      * @param bool $expiredOnly
+     *
      * @return mixed
      */
     public function deleteByModel(TransientPropertyInterface $transient, $expiredOnly = true)
     {
         $query = $transient->transientProperties();
 
-        if($expiredOnly)
+        if ($expiredOnly) {
             $query->expired();
+        }
 
         return $query->delete();
     }
@@ -91,14 +99,16 @@ class TransientRepository implements TransientRepositoryInterface
      *
      * @param TransientPropertyInterface $transient
      * @param bool $expiredOnly
+     *
      * @return mixed
      */
     public function deleteByModelType(TransientPropertyInterface $transient, $expiredOnly = true)
     {
         $query = Transient::where('model_type', get_class($transient));
 
-        if ($expiredOnly)
+        if ($expiredOnly) {
             $query->expired();
+        }
 
         return $query->delete();
     }
@@ -108,6 +118,7 @@ class TransientRepository implements TransientRepositoryInterface
      *
      * @param array $transientProperties
      * @param bool $expiredOnly
+     *
      * @return int
      */
     public function deleteByProperty(array $transientProperties, $expiredOnly = true)
@@ -115,8 +126,9 @@ class TransientRepository implements TransientRepositoryInterface
         if ($transientProperties) {
             $query = Transient::whereIn('property', $transientProperties);
 
-            if ($expiredOnly)
+            if ($expiredOnly) {
                 $query->expired();
+            }
 
             return $query->delete();
         }
@@ -131,16 +143,21 @@ class TransientRepository implements TransientRepositoryInterface
      * @param TransientPropertyInterface $transient
      * @param array $transientProperties
      * @param bool $expiredOnly
+     *
      * @return int
      */
-    public function deleteByModelProperty(TransientPropertyInterface $transient, array $transientProperties, $expiredOnly = true)
-    {
+    public function deleteByModelProperty(
+        TransientPropertyInterface $transient,
+        array $transientProperties,
+        $expiredOnly = true
+    ) {
         if ($transientProperties) {
 
             $query = $transient->transientProperties()->whereIn('property', $transientProperties);
 
-            if ($expiredOnly)
+            if ($expiredOnly) {
                 $query->expired();
+            }
 
             return $query->delete();
         }

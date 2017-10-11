@@ -2,8 +2,8 @@
 
 namespace Bmartel\Transient;
 
-
 use Config;
+
 
 trait TransientPropertyTrait
 {
@@ -12,6 +12,7 @@ trait TransientPropertyTrait
      * Return a signature for the property.
      *
      * @param $property
+     *
      * @return string
      */
     public function signature($property)
@@ -19,10 +20,10 @@ trait TransientPropertyTrait
         $key = Config::get('app.key'); // Sign the signature with the app key to know it came from this app.
 
         $property = json_encode([
-            'id' => $this->getKey(),
-            'model' => get_called_class(),
-            'property' => $property,
-            'created_at' => time()
+            'id'         => $this->getKey(),
+            'model'      => get_called_class(),
+            'property'   => $property,
+            'created_at' => time(),
         ]);
 
         return hash_hmac('sha256', $property, $key);

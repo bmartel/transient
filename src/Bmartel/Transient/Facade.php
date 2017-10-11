@@ -10,7 +10,9 @@ namespace Bmartel\Transient;
 
 use Illuminate\Support\Facades\Facade as LaravelFacade;
 
-class Facade extends LaravelFacade{
+
+class Facade extends LaravelFacade
+{
 
     /**
      * Get the registered name of the component.
@@ -22,5 +24,4 @@ class Facade extends LaravelFacade{
         return 'Bmartel\Transient\Service';
     }
 
-
-} 
+}
